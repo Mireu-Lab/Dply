@@ -1,0 +1,9 @@
+{
+    "200": "Done!",
+    "202": "Not processed.",
+    "404": "Account not found",
+    "403": "You do not have permission.",
+    "501": "Already registered.",
+    "503": "You do not have permission.",
+    "500": "This is an unknown error."
+}
