@@ -1,26 +1,13 @@
 from pydantic import BaseModel
 from enum import Enum
 
+class buildInfo(BaseModel):
+    projectName: str
 
-class buildOS(str, Enum):
-    """debian, ubuntu, fedora, rockylinux"""
-    debian = "debian"
-    ubuntu = "ubuntu"
-    fedora = "fedora"
-    rockylinux = "rockylinux"
+    Processor: str = "CPU"
+    OS: str = "ubuntu"
 
-class databaseBuildList(str, Enum):
-    """mysql, mariadb, mongodb, redis"""
-    mysql = "mysql"
-    mariadb = "mariadb"
-    mongodb = "mongodb"
-    redis = "redis"
+    Type: str = "Jupyter"
+    Password: str = None
 
-class buildType(str, Enum):
-    """SSH, Jupyter"""
-    SSH = "SSH"
-    Jupyter = "Jupyter"
-
-
-class databaseBuild(BaseModel):
-    databaseBuildList : list[databaseBuildList]
+    databaseList: list = None
