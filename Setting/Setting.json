@@ -1,18 +1,15 @@
 {
-    "SQL": "SQL/SQL.db",
-
+    "SQL": "SQL/SQL.sqlite",
     "Container": {
         "SSH": {
             "URL": "registry.gitlab.com/container-images4/docker-ssh-conteiner",
             "Tag": "0sshcontainer"
         },
-
         "Jupyter": {
             "URL": "registry.gitlab.com/container-images4/docker-jupyter-container",
             "Tag": "containerjupyter0"
         }
     },
-
     "PortSet": {
         "MIN": 45535,
         "MAX": 65535
