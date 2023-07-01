@@ -1,37 +1,20 @@
-from src.error import ERROR 
+from src.error import ERROR
 from src.set import Setting_ENV, SQL, DataBase
 import random
 
-def find():
-    pass
 
-def randomPort() -> (int | None):
-    """
-    랜덤으로 포트 중복되지 않는 데이터를 출력합니다.
-    """
-    try:
-        returnList = []
+def find(projectName: str = None) -> dict:
+    Tag = ""
 
-        # SQL Container Port Select
-        DataBase.execute("select Port from DevContainer;")
+    if projectName != None:
+        Tag = f"where DevContainerName = {projectName};"
 
-        for row in DataBase.fetchall():
-            print(row)
-            returnList.append(row)
+    return dict(DataBase.execute(f"select * from DevContainer" + Tag).fetchall())
 
 
-        # Random Num
-        for _ in range(5):
-            randomNum = random.randint(
-                Setting_ENV["PortSet"]["MIN"], 
-                Setting_ENV["PortSet"]["MAX"])
-            
-            returnInt = randomNum if randomNum not in returnList else None
-            if returnInt != None:
-                pass
+def containerNameCheck(projectName: str) -> bool:
+    databaseReturn = DataBase.execute(
+        f"""select exists (select * from `DevContainer` where `ProjectName` = '{projectName}');"""
+    ).fetchall()[0][0]
 
-        return returnInt
-                
-    except: 
-        ERROR.Logging()
-        return None
+    return bool(databaseReturn)
