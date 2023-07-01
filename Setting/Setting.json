@@ -1,5 +1,16 @@
 {
     "SQL": "SQL/SQL.sqlite",
+    "gpuOS": [
+        "ubuntu",
+        "centos",
+        "rocklinux"
+    ],
+    "cpuOS": [
+        "ubuntu",
+        "fedora",
+        "debian",
+        "rocklinux"
+    ],
     "Container": {
         "SSH": {
             "URL": "registry.gitlab.com/container-images4/docker-ssh-conteiner",
@@ -13,5 +24,13 @@
     "PortSet": {
         "MIN": 45535,
         "MAX": 65535
-    }
+    },
+    "systemAssignments": [
+        {
+            "Cpu": null,
+            "Gpu": null,
+            "Ram": null,
+            "Disk": null
+        }
+    ]
 }
