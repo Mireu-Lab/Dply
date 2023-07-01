@@ -1,10 +1,11 @@
 create table
   `DevContainer` (
-    `id` integer not null primary key autoincrement,
+    `id` INTEGER NOT NULL PRIMARY KEY autoincrement,
+    `ProjectName` TEXT NULL UNIQUE,
     `MakeAccount` TEXT NULL,
     `DevContainerType` TEXT NULL,
-    `DevContainerName` TEXT NULL,
-    `DevContainerID` varchar(255) NOT NULL,
+    `DevContainerID` TEXT NOT NULL,
+    `DevContainerStatus` BOOLEAN NOT NULL,
     `GPU` INT NULL,
     `Port` INT not NULL,
     `CreatedTimes` FLOAT NOT NULL
@@ -12,8 +13,11 @@ create table
 
 create table
   `DatabaseContainer` (
-    `DevContainerID` varchar(255) NOT NULL,
-    `DataBaseID` varchar(255) NOT NULL,
-    `CreatedTimes` datetime NOT NULL default CURRENT_TIMESTAMP,
-    primary key (`DevContainerID`)
+    `DevContainerID` TEXT NOT NULL,
+    `DataBaseID` TEXT NOT NULL,
+    `DataBaseType` TEXT NOT NULL,
+    `DataBaseIP` TEXT NOT NULL,
+    `DataBaseStatus` BOOLEAN NOT NULL DEFAULT FALSE,
+    `CreatedTimes` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`DevContainerID`)
   );
