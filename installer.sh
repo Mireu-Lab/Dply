@@ -17,7 +17,7 @@ dockerInstall() {
 }
 
 dockerSSHImage() {
-    #SSH Container Image
+    #SSH CPU Container Image
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:debiansshcontainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:fedorasshcontainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer
@@ -25,11 +25,28 @@ dockerSSHImage() {
 }
 
 dockerJupyterImage() {
-    #Jupyter Container Image
+    #Jupyter CPU Container Image
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterdebian
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterfedora
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
+
+    #Jupyter GPU Container Image
+    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpucentossshcontainer
+    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpurockylinuxsshcontainer
+    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpuubuntusshcontainer
+}
+
+dockerJupyterImage() {
+    #Jupyter CPU Container Image
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterfedora
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
+
+    #Jupyter GPU Container Image
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupytercentos
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterrockylinux
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterubuntu
 }
 
 dockerDataBaseImage() {
