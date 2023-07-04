@@ -22,14 +22,6 @@ dockerSSHImage() {
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:fedorasshcontainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:ubuntusshcontainer
-}
-
-dockerJupyterImage() {
-    #Jupyter CPU Container Image
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterdebian
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterfedora
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
 
     #Jupyter GPU Container Image
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpucentossshcontainer
