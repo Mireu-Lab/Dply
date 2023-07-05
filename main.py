@@ -30,6 +30,22 @@ async def containerBuild(buildInfo: buildInfo):
 
     결과값으로는 아래와 같이 출력된다.
 
+    또한 해당 API에서는 지원하는 타입이 지정되어있다.
+
+    지정된 타입은 아래와 같이 구성되어있다.
+
+    | 변수명       | 타입 | 지원 타입 (대소문자 확인)    |
+    | ------------ | ---- | ---------------------------- |
+    | Processor    | str  | CPU, GPU                     |
+    | OS           | str  | ubuntu, centos, rockylinux   |
+    | Type         | str  | SSH, Jupyter                 |
+    | databaseList | list | mysql, mariadb, mongo, redis |
+
+    대소문자 확인후 대입을 해야 에러 발생이 되지 않는다.
+
+    또한 이러한 문자 해석은 따로 필터를 거치지 않고 구현되어있다.
+
+
     ## Status Code 200
 
     해당 에러는 정상적으로 배포가 되었으며
