@@ -3,7 +3,7 @@
     "OS": [
         "ubuntu",
         "centos",
-        "rocklinux"
+        "rockylinux"
     ],
     "containerImageURL": {
         "SSH": {
