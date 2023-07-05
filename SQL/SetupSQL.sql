@@ -1,23 +1,22 @@
 create table
-  `DevContainer` (
+  `devContainer` (
     `id` INTEGER NOT NULL PRIMARY KEY autoincrement,
-    `ProjectName` TEXT NULL UNIQUE,
+    `projectName` TEXT NULL UNIQUE,
     `MakeAccount` TEXT NULL,
-    `DevContainerType` TEXT NULL,
-    `DevContainerID` TEXT NOT NULL,
-    `DevContainerStatus` BOOLEAN NOT NULL,
-    `GPU` INT NULL,
-    `Port` INT not NULL,
-    `CreatedTimes` FLOAT NOT NULL
+    `devContainerType` TEXT NULL,
+    `devContainerID` TEXT NOT NULL,
+    `devContainerStatus` BOOLEAN NOT NULL,
+    `gpu` INT NULL,
+    `port` INT NOT NULL,
+    `createdTimes` FLOAT NOT NULL
   );
 
 create table
-  `DatabaseContainer` (
-    `DevContainerID` TEXT NOT NULL,
-    `DataBaseID` TEXT NOT NULL,
-    `DataBaseType` TEXT NOT NULL,
-    `DataBaseIP` TEXT NOT NULL,
-    `DataBaseStatus` BOOLEAN NOT NULL DEFAULT FALSE,
-    `CreatedTimes` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`DevContainerID`)
+  `databaseContainer` (
+    `devContainerID` TEXT NOT NULL,
+    `databaseID` TEXT NOT NULL,
+    `databaseType` TEXT NOT NULL,
+    `databaseIP` TEXT NOT NULL,
+    `databaseStatus` BOOLEAN NOT NULL DEFAULT FALSE,
+    `createdTimes` FLOAT NOT NULL
   );
