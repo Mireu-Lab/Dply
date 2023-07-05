@@ -1,36 +1,22 @@
 {
     "SQL": "SQL/SQL.sqlite",
-    "gpuOS": [
+    "OS": [
         "ubuntu",
         "centos",
         "rocklinux"
     ],
-    "cpuOS": [
-        "ubuntu",
-        "fedora",
-        "debian",
-        "rocklinux"
-    ],
-    "Container": {
+    "containerImageURL": {
         "SSH": {
             "URL": "registry.gitlab.com/container-images4/docker-ssh-conteiner",
-            "Tag": "0sshcontainer"
+            "TAG": "0sshcontainer"
         },
         "Jupyter": {
             "URL": "registry.gitlab.com/container-images4/docker-jupyter-container",
-            "Tag": "containerjupyter0"
+            "TAG": "containerjupyter0"
         }
     },
-    "PortSet": {
+    "portSet": {
         "MIN": 45535,
         "MAX": 65535
-    },
-    "systemAssignments": [
-        {
-            "Cpu": null,
-            "Gpu": null,
-            "Ram": null,
-            "Disk": null
-        }
-    ]
+    }
 }
