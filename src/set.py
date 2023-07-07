@@ -6,8 +6,6 @@ from dotenv import load_dotenv  # Setting .ENV File 라이브러리
 import sqlite3, docker  # SQL, Docker SDK 라이브러리
 import datetime
 
-import torch
-
 Setting_ENV = load(open("Setting/Setting.json", "r"))
 load_dotenv()
 
