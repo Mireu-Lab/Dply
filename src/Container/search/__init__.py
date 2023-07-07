@@ -1,4 +1,3 @@
-from typing import Any
 from src.error import ERROR, JSONResponse
 from src.set import DataBase
 
