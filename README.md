@@ -7,7 +7,7 @@
 - uvicorn[standard] == 0.22.0 # FastAPI 비동기 구동 라이브러리
 - FastAPI == 0.95.1 # FastAPI 라이브러리
 - docker == 6.1.3 # Docker SDK 라이브러리
-- python-dotenv = 1.0.0 # env 해석 라이브러리
+- python-dotenv == 1.0.0 # env 해석 라이브러리
 - torch == 2.0.1 # GPU 확인용 파이토치
 
 <br><br>
