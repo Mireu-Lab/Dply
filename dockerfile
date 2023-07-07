@@ -9,7 +9,7 @@ RUN pip3 install -r requirements.txt
 
 VOLUME [ "/SQL", "/Log" ]
 
-ENV portSet_MIN 45535
-ENV portSet_MAX 65535
+ENV portSet_MIN 45535\
+    portSet_MAX 65535
 
 CMD [ "python3", "main.py" ]
