@@ -1,72 +1,14 @@
 from src.error import ERROR
-from src.set import DockerClient, Setting_ENV, DataBase
+from src.set import DockerClient, time
+
+from .lib.randomPort import randomPort
+from .lib.gpuScheduler import GPUScheduler
 
 from .databases import databaseBuild
 from .jupyter import jupyterBuild
 from .ssh import sshBuild
 
-import docker, torch
-
-
-def GPUScheduler() -> int:
-    """
-    해당 함수는 개발환경 컨테이너에 할당할 GPU의 스케줄링 처리 함수이다.
-
-    해당 함수를 사용하기 위해 필요한 변수는 없다.
-
-    출력값은 **int**으로 출력된다.
-    """
-    try:
-        gpuDevice = []
-
-        for gpuDevices in range(torch.cuda.device_count()):
-            DataBase.execute(
-                f"select `GPU` from `devContainer` WHERE `GPU` NOT NULL and `GPU` = {gpuDevices - 1};"
-            )
-            gpuDevice.append(len(DataBase.fetchall()))
-
-        return gpuDevice.index(min(gpuDevice))
-
-    except:
-        ERROR.Logging()
-        return 0
-
-
-def randomPort() -> int | None:
-    """
-    해당 함수는 Setting.json에서 할당한 최대값과 최소값을 이용하여 랜덤으로 포트 중복되지 않는 데이터를 출력하는 함수이다.
-
-    해당 함수에서 필요한 변수는 없으며 출력값은 **int**나 **None**을 출력한다.
-
-    **Int**는 정상적으로 port가 할당이 되는 값일때 출력되며 **None**일때는 할당할 포트가 없는경우 출력된다.
-    """
-
-    import random
-
-    try:
-        returnList = []
-
-        # SQL Container port Select
-        DataBase.execute("select `port` from `devContainer`;")
-
-        for row in DataBase.fetchall():
-            returnList.append(row[0])
-
-        # Random Num
-        for _ in range(5):
-            randomNum = random.randint(
-                Setting_ENV["portSet"]["MIN"], Setting_ENV["portSet"]["MAX"]
-            )
-
-            returnInt = randomNum if randomNum not in returnList else None
-            if returnInt != None:
-                break
-
-        return returnInt
-
-    except:
-        ERROR.Logging()
-        return None
+import docker
 
 
 class Build:
@@ -93,6 +35,7 @@ class Build:
         | processor         | str  | CPU    | Container 프로세서를 GPU, CPU 설정 한다.                   |
         """
 
+        self.runTime = time()  # 요청 시간
         self.projectName = projectName  # 프로젝트 이름
 
         self.processorType = processor  # 개발환경 컨테이너 프로세서 설정에 대한 클래스 변수
