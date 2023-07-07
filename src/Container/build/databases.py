@@ -81,7 +81,7 @@ def databaseBuild(self) -> list:
             databaseContainerIP = DockerClient.containers.get(
                 databaseContainerID
             ).attrs["NetworkSettings"]["Networks"][
-                f"{self.projectName}_{self.port}_network"
+                f"Build_Management_{self.projectName}_{self.port}_network"
             ][
                 "IPAddress"
             ]
