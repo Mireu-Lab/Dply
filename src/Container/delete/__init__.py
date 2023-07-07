@@ -53,14 +53,16 @@ class remove:
 
         """Projects Docker Container Network Setting ID"""
         self.projectNetworks = DockerClient.networks.get(
-            f"{projectName}_{self.port}_network"
+            f"Build_Management_{projectName}_{self.port}_network"
         ).id
 
         """Projects Docker Container Volume Setting ID"""
         self.projectVolumes = set(
             containerID.id
             for containerID in DockerClient.volumes.list()
-            if (containerID.id).startswith(f"{self.projectName}_{self.port}")
+            if (containerID.id).startswith(
+                f"Build_Management_{self.projectName}_{self.port}"
+            )
         )
 
     def Project(self) -> dict:

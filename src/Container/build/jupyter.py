@@ -37,7 +37,7 @@ def jupyterBuild(self) -> dict:
         self.devContainerID = DockerClient.containers.create(
             f"""{Setting_ENV["containerImageURL"]["Jupyter"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
             hostname=self.projectName,  # 컨테이너 호스트 이름 파라미터
-            name=f"{self.containerOS}_jupyter_{self.projectName}",  # 도커 컨테이너 이름 파라미터
+            name=f"Build_Management_{self.containerOS}_jupyter_{self.projectName}",  # 도커 컨테이너 이름 파라미터
             ports={"8888/tcp": self.port},  # 컨테이너 Port 할당 파라미터
             environment={"PASSWORD": self.password},  # 컨테이너 기본 Password 파라미터
             device_requests=self.gpuSetting,  # GPU할당 파라미터

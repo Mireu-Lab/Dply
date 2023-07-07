@@ -52,12 +52,12 @@ class Build:
 
         """Projects Docker Container Network Setting ID"""
         self.projectNetworks = DockerClient.networks.create(
-            f"{projectName}_{self.port}_network", driver="bridge"
+            f"Build_Management_{projectName}_{self.port}_network", driver="bridge"
         ).id
 
         """Projects Docker Container Volume Setting ID"""
         self.projectVolumes = DockerClient.volumes.create(
-            f"{projectName}_{self.port}_volume", driver="local"
+            f"Build_Management_{projectName}_{self.port}_volume", driver="local"
         ).id
 
         """GPU 프로세서 할당 처리"""

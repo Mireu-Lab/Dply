@@ -64,7 +64,7 @@ def databaseBuild(self) -> list:
             databaseContainerID = DockerClient.containers.create(
                 databases + ":latest",  # 데이터베이스 컨테이너 이미지 파라미터
                 hostname=f"""{databases}_{self.projectName}""",  # 데이터베이스 컨테이너 호스트 이름 파라미터
-                name=f"{self.containerOS}_{databases}_{self.projectName}",  # 도커 컨테이너 이름 파라미터
+                name=f"Build_Management_{self.containerOS}_{databases}_{self.projectName}",  # 도커 컨테이너 이름 파라미터
                 environment=self.databaseSetting[0],  # 데이터베이스 컨테이너 비밀번호 처리 파라미터
                 network=self.projectNetworks,  # 도커 프로젝트 네트워크 할당 파라미터
                 volumes=self.databaseSetting[1],  # 도커 프로젝트 볼륨 할당 파라미터
