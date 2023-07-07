@@ -3,10 +3,11 @@ from src.Container import (
     build as containerBuilder,
     delete as containerDelete,
     search as containerSearch,
+    status as containerStatus,
 )
 
 from fastapi import FastAPI
-from jsonset import buildInfo
+from jsonset import buildInfo, statusSetting
 
 
 api = FastAPI()
@@ -139,24 +140,15 @@ async def containerBuild(buildInfo: buildInfo):
         )  # 프로젝트 이름이 곂칠때 에러
 
 
-@api.put("/project/container/stop", tags=["Container"])
-async def projectContainerStop():
-    pass
+@api.put("/project/container/status", tags=["Container"])
+async def projectContainerStatus(projectName: str, statusSetting: statusSetting):
+    if containerSearch.containerNameCheck(projectName) == True:
+        return containerStatus.status(projectName, statusSetting).project()
 
-
-@api.put("/project/container/start", tags=["Container"])
-async def projectContainerRestart():
-    pass
-
-
-@api.put("/project/container/restart", tags=["Container"])
-async def projectContainerRestart():
-    pass
-
-
-@api.put("/project/container/kill", tags=["Container"])
-async def projectContainerKill():
-    pass
+    else:
+        return ERROR.API_Error_Messages(
+            404, "NotFoundProjects", "Projects that cannot be found"
+        )  # 프로젝트 컨테이너가 없는경우
 
 
 @api.delete("/container/remove", tags=["Container"])
