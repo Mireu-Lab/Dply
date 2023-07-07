@@ -5,35 +5,65 @@ from .lib.sqlUpdate import commitDevContainer, commitDatabaseContainer
 
 
 def devContainer(self) -> bool:
+    """
+    해당 함수는 개발환경 컨테이너를 강제 종료시키기 위한 함수이다.
+
+    결과값으로는 bool으로 출력되며 출력값으로는 아래와 같이 출력된다.
+
+    - True: 컨테이너 실행
+
+    - False: 컨테이너 종료
+    """
+
     status = bool(
         self.projectContainenrInfo["devContainer"][self.devContainerID]["status"]
-    )
+    )  # 기존 컨테이너 처리 상태
 
     if status == True:
         try:
-            DockerClient.containers.get(self.devContainerID).kill()
+            DockerClient.containers.get(self.devContainerID).kill()  # 컨테이너 강제종료
             status = False
 
         except:
             ERROR.Logging()
             status = True
 
-    commitDevContainer(status, self.devContainerID, self.runTime)
+    commitDevContainer(status, self.devContainerID, self.runTime)  # SQL 처리
 
     return status
 
 
 def databaseContainer(self) -> dict:
+    """
+    해당 함수는 데이터베이스 컨테이너를 강제 종료시키기 위한 함수이다.
+
+    결과값으로는 Dict[Bool]으로 출력되며 출력값으로는 아래와 같이 출력된다.
+
+    ### 출력값
+
+    ```
+    {
+        str: bool
+    }
+    ```
+
+    ### Bool 처리값
+
+    - True: 컨테이너 실행
+
+    - False: 컨테이너 종료
+    """
+
     databaseContainerStatus = {}
 
-    for containerID in self.databaseContainerID:
+    for containerID in self.databaseContainerID:  # 데이터베이스 컨테이너 ID List
         status = bool(
             self.projectContainenrInfo["databaseContainers"][containerID]["status"]
-        )
+        )  # 기존 컨테이너 처리 상태
 
         if status == True:
             try:
-                DockerClient.containers.get(containerID).kill()
+                DockerClient.containers.get(containerID).kill()  # 컨테이너 강제종료
                 status = False
 
             except:
@@ -45,7 +75,7 @@ def databaseContainer(self) -> dict:
             self.devContainerID,
             self.projectContainenrInfo["databaseContainers"][containerID]["type"],
             self.runTime,
-        )
+        )  # SQL 처리
 
         databaseContainerStatus.update(
             {

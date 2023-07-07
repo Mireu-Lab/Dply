@@ -26,7 +26,7 @@ def devContainer(self) -> bool:
 def databaseContainer(self) -> dict:
     databaseContainerStatus = {}
 
-    for containerID in self.databaseContainerID:
+    for containerID in self.databaseContainerID:  # 데이터베이스 컨테이너 ID List
         status = bool(
             self.projectContainenrInfo["databaseContainers"][containerID]["status"]
         )
@@ -40,19 +40,13 @@ def databaseContainer(self) -> dict:
                 ERROR.Logging()
                 status = True
 
-        try:
-            print("test")
-            commitDatabaseContainer(
-                status,
-                self.devContainerID,
-                self.projectContainenrInfo["databaseContainers"][containerID]["type"],
-                self.runTime,
-            )
-            status = False
-
-        except:
-            ERROR.Logging()
-            status = True
+        commitDatabaseContainer(
+            status,
+            self.devContainerID,
+            self.projectContainenrInfo["databaseContainers"][containerID]["type"],
+            self.runTime,
+        )
+        status = False
 
         databaseContainerStatus.update(
             {
