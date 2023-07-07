@@ -2,13 +2,14 @@ create table
   `devContainer` (
     `id` INTEGER NOT NULL PRIMARY KEY autoincrement,
     `projectName` TEXT NULL UNIQUE,
-    `MakeAccount` TEXT NULL,
+    `makeAccount` TEXT NULL,
     `devContainerType` TEXT NULL,
     `devContainerID` TEXT NOT NULL,
     `devContainerStatus` BOOLEAN NOT NULL,
     `gpu` INT NULL,
     `port` INT NOT NULL,
-    `createdTimes` FLOAT NOT NULL
+    `createdTimes` FLOAT NOT NULL,
+    `updateTimes` FLOAT NOT NULL
   );
 
 create table
@@ -17,6 +18,7 @@ create table
     `databaseID` TEXT NOT NULL,
     `databaseType` TEXT NOT NULL,
     `databaseIP` TEXT NOT NULL,
-    `databaseStatus` BOOLEAN NOT NULL DEFAULT FALSE,
-    `createdTimes` FLOAT NOT NULL
+    `databaseStatus` BOOLEAN NOT NULL,
+    `createdTimes` FLOAT NOT NULL,
+    `updateTimes` FLOAT NOT NULL
   );

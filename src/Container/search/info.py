@@ -37,6 +37,7 @@ def singleInformation(self) -> dict:
                 `port`,
                 `gpu`,
                 `createdTimes`,
+                `updateTimes`,
                 `devContainerID`
             from `devContainer` where `projectName` = '{str(self.projectName)}';"""
     ).fetchall()  # 개발 환경 컨테이너 정보 SQL Read
@@ -49,14 +50,16 @@ def singleInformation(self) -> dict:
         f"""select
                 `databaseType`,
                 `databaseStatus`,
-                `databaseIP`
-            from `databaseContainer` where `devContainerID` = '{str(projectInfo[0][6])}';"""
+                `databaseIP`,
+                `updateTimes`
+            from `databaseContainer` where `devContainerID` = '{str(projectInfo[0][7])}';"""
     ).fetchall():
         databaseContainerInfo.update(
             {
                 str(databaseInfo[0]): {  # 컨테이너 타입
                     "status": bool(databaseInfo[1]),  # 컨테이너 작동 상황
                     "ip": str(databaseInfo[2]),  # 컨테이너 내부 IP
+                    "updatetime": float(databaseInfo[3]),
                 }
             }
         )
@@ -69,6 +72,7 @@ def singleInformation(self) -> dict:
             "gpu": bool(gpuStatus),
             "status": bool(projectInfo[0][2]),
             "port": int(projectInfo[0][3]),
+            "updateTime": int(projectInfo[0][6]),
         },
         "databaseContainers": dict(databaseContainerInfo),
     }
