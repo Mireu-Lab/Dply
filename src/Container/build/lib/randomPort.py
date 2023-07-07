@@ -1,5 +1,13 @@
 from src.error import ERROR
-from src.set import Setting_ENV, DataBase
+from src.set import DataBase
+
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
+
+portSet_MIN = getenv("portSet_MIN")  # 사용자 지정 최소값 포트 설정
+portSet_MAX = getenv("portSet_MAX")  # 사용자 지정 최댓값 포트 설정
 
 
 def randomPort() -> int | None:
@@ -24,9 +32,7 @@ def randomPort() -> int | None:
 
         # Random Num
         for _ in range(5):
-            randomNum = random.randint(
-                Setting_ENV["portSet"]["MIN"], Setting_ENV["portSet"]["MAX"]
-            )
+            randomNum = random.randint(portSet_MIN, portSet_MAX)
 
             returnInt = randomNum if randomNum not in returnList else None
             if returnInt != None:

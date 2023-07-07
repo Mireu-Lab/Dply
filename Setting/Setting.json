@@ -14,9 +14,5 @@
             "URL": "registry.gitlab.com/container-images4/docker-jupyter-container",
             "TAG": "containerjupyter0"
         }
-    },
-    "portSet": {
-        "MIN": 45535,
-        "MAX": 65535
     }
 }
