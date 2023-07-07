@@ -6,8 +6,8 @@ from os import getenv
 
 load_dotenv()
 
-portSet_MIN = getenv("portSet_MIN")  # 사용자 지정 최소값 포트 설정
-portSet_MAX = getenv("portSet_MAX")  # 사용자 지정 최댓값 포트 설정
+portSet_MIN = int(getenv("portSet_MIN"))  # 사용자 지정 최소값 포트 설정
+portSet_MAX = int(getenv("portSet_MAX"))  # 사용자 지정 최댓값 포트 설정
 
 
 def randomPort() -> int | None:
