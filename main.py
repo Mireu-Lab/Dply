@@ -36,9 +36,9 @@ async def containerBuild(buildInfo: buildInfo):
     지정된 타입은 아래와 같이 구성되어있다.
 
     | 변수명       | 타입 | 지원 타입 (대소문자 확인)    |
-    | ------------ | ---- | ---------------------------- |
+    | :------------: | :----: | :----------------------------: |
     | Processor    | str  | CPU, GPU                     |
-    | OS           | str  | ubuntu, centos, rockylinux   |
+    | OS           | str  | ubuntu, centos, rockylinux, tensorflow   |
     | Type         | str  | SSH, Jupyter                 |
     | databaseList | list | mysql, mariadb, mongo, redis |
 

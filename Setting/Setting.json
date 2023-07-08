@@ -3,7 +3,8 @@
     "OS": [
         "ubuntu",
         "centos",
-        "rockylinux"
+        "rockylinux",
+        "tensorflow"
     ],
     "containerImageURL": {
         "SSH": {
