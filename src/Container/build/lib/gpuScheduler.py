@@ -1,7 +1,12 @@
 from src.error import ERROR
 from src.set import DataBase
 
-import torch
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
+
+gpuSetting = int(getenv("GPUSetting"))  # 사용자 지정 GPU할당값
 
 
 def GPUScheduler() -> int:
@@ -15,7 +20,7 @@ def GPUScheduler() -> int:
     try:
         gpuDevice = []
 
-        for gpuDevices in range(torch.cuda.device_count()):
+        for gpuDevices in range(gpuSetting):
             DataBase.execute(
                 f"select `GPU` from `devContainer` WHERE `GPU` NOT NULL and `GPU` = {gpuDevices - 1};"
             )
