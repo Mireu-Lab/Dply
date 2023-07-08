@@ -56,8 +56,8 @@ class Build:
         ).id
 
         """Projects Docker Container Volume Setting ID"""
-        self.projectVolumes = DockerClient.volumes.create(
-            f"Build_Management_{projectName}_{self.port}_volume", driver="local"
+        self.devContainerVolumes = DockerClient.volumes.create(
+            f"Build_Management_{projectName}_{self.containerOS}_volume", driver="local"
         ).id
 
         """GPU 프로세서 할당 처리"""

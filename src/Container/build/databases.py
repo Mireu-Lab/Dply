@@ -5,7 +5,7 @@ from .lib.sqlWrite import databaseContainer as databaseContainer_sqlWrite
 from .lib.containerRemove import dataabaseContainer as databaseContainer_remove
 
 
-def databaseVolume(self, projectVolumes: str, databaseType: str) -> None:
+def databaseVolume(self, databaseType: str) -> None:
     """
     해당 함수는 데이터베이스 Save Volume설정을 하기 위한 함수이다.
 
@@ -18,16 +18,22 @@ def databaseVolume(self, projectVolumes: str, databaseType: str) -> None:
 
     Return값은 None으로 출력된다.
     """
+
+    databaseContainerVolumes = DockerClient.volumes.create(
+        f"Build_Management_{self.projectName}_{databaseType}_volume",
+        driver="local",
+    ).id
+
     if databaseType == "mysql":
         self.databaseSetting = [
             {"MYSQL_ROOT_PASSWORD": self.password},
-            {projectVolumes: {"bind": "/var/lib/mysql", "mode": "rw"}},
+            {databaseContainerVolumes: {"bind": "/var/lib/mysql", "mode": "rw"}},
         ]
 
     elif databaseType == "mariadb":
         self.databaseSetting = [
             {"MARIADB_ROOT_PASSWORD": self.password},
-            {projectVolumes: {"bind": "/var/lib/maria", "mode": "rw"}},
+            {databaseContainerVolumes: {"bind": "/var/lib/maria", "mode": "rw"}},
         ]
 
     elif databaseType == "mongo":
@@ -36,11 +42,14 @@ def databaseVolume(self, projectVolumes: str, databaseType: str) -> None:
                 "MONGO_INITDB_ROOT_USERNAME": "root",
                 "MONGO_INITDB_ROOT_PASSWORD": self.password,
             },
-            {projectVolumes: {"bind": "/data/db", "mode": "rw"}},
+            {databaseContainerVolumes: {"bind": "/data/db", "mode": "rw"}},
         ]
 
     elif databaseType == "redis":
-        self.databaseSetting = [None, {projectVolumes: {"bind": "/data", "mode": "rw"}}]
+        self.databaseSetting = [
+            None,
+            {databaseContainerVolumes: {"bind": "/data", "mode": "rw"}},
+        ]
 
     return None
 
@@ -58,7 +67,7 @@ def databaseBuild(self) -> list:
 
     for databases in self.databaseContainer:
         databaseContainerID = None
-        databaseVolume(self, self.projectVolumes, databases)
+        databaseVolume(self, databases)
 
         try:
             databaseContainerID = DockerClient.containers.create(

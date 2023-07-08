@@ -60,9 +60,7 @@ class remove:
         self.projectVolumes = set(
             containerID.id
             for containerID in DockerClient.volumes.list()
-            if (containerID.id).startswith(
-                f"Build_Management_{self.projectName}_{self.port}"
-            )
+            if (containerID.id).startswith(f"Build_Management_{self.projectName}")
         )
 
     def Project(self) -> dict:

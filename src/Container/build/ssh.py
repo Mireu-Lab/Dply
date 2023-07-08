@@ -37,7 +37,7 @@ def sshBuild(self) -> dict:
             device_requests=self.gpuSetting,  # GPU할당 파라미터
             network=self.projectNetworks,  # 프로젝트 컨테이너 네트워크 할당 파라미터
             volumes={
-                self.projectVolumes: {"bind": "/workspace", "mode": "rw"}
+                self.devContainerVolumes: {"bind": "/workspace", "mode": "rw"}
             },  # 프로젝트 컨테이너 볼륨 할당 파라미터
         ).short_id  # 컨테이너 ID 클래스 변수에 지정
 
