@@ -17,28 +17,29 @@ dockerInstall() {
 }
 
 dockerSSHImage() {
-    #SSH CPU Container Image
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:debiansshcontainer
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:fedorasshcontainer
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer
+    #SSH Container Image
+    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:centossshcotainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:ubuntusshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:tensorflowsshcontainer
 
-    #Jupyter GPU Container Image
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpucentossshcontainer
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpurockylinuxsshcontainer
-    docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpuubuntusshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpucentossshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpuubuntusshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpurockylinuxsshcontainer
+	docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gputensorflowsshcontainer
 }
 
 dockerJupyterImage() {
-    #Jupyter CPU Container Image
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterfedora
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
+    #Jupyter Container Image
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupytercentos
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
-
-    #Jupyter GPU Container Image
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupytertensorflow
+    
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupytercentos
-    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterrockylinux
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterubuntu
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterrockylinux
+    docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupytertensorflow
 }
 
 dockerDataBaseImage() {
@@ -48,7 +49,6 @@ dockerDataBaseImage() {
     docker pull mongo:latest
     docker pull redis:latest
 }
-
 
 cat asciiArt
 
