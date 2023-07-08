@@ -49,7 +49,7 @@ async def containerBuild(buildInfo: buildInfo):
 
     ## Status Code 200
 
-    해당 에러는 정상적으로 배포가 되었으며
+    해당 에러는 정상적으로 배포가 되었습니다.
 
     ```
     {
@@ -69,8 +69,8 @@ async def containerBuild(buildInfo: buildInfo):
 
     ## Status Code 400
 
-    해당 에러는 Docker Image가 Pull이 되지 않은경우 발생이 될수이다.
-    Installer를 다시 실행후 처리 하시오.
+    해당 에러는 Docker Image가 Pull이 되지 않은경우 발생이 될수있는이슈입니다.
+    Installer를 다시 실행후 처리 하세요.
 
     ```
     {
@@ -142,6 +142,38 @@ async def containerBuild(buildInfo: buildInfo):
 
 @api.put("/project/container/status", tags=["Container"])
 async def projectContainerStatus(projectName: str, statusSetting: statusSetting):
+    """
+    해당 함수는 프로젝트 컨테이너 실행 관리를 위한 프로그램입니다.
+    
+    해당 API를 사용하기 위해서 필요한 파라미터는 아래와 같습니다.
+
+    |   변수명    | 타입 | 기본값 |     설명      |
+    | :---------: | :--: | :----: | :-----------: |
+    | projectName | str  |   -    | 프로젝트 이름 |
+    | statusSetting | str  |   -    | 프로젝트 컨테이너 상태 정보 |
+
+    결과값으로는 아래와 같이 출력됩니다.
+
+    ## Status Code 200
+    {
+        "Status": {
+            "devContainer": bool,
+            "databaseContainer": {
+                str: bool,
+                ...
+            }
+        },
+    }
+
+    ## Status Code 404
+
+    ```json
+    {
+        "msg": "Not found",
+        "NotFoundProjects": "Projects that cannot be found"
+    }
+    ```
+    """
     if containerSearch.containerNameCheck(projectName) == True:
         return containerStatus.status(projectName, statusSetting).project()
 
@@ -162,7 +194,7 @@ async def containerRemove(projectName: str):
     | :---------: | :--: | :----: | :-----------: |
     | projectName | str  |   -    | 프로젝트 이름 |
 
-    결과값으로는 아래와 같이 출력된다.
+    결과값으로는 아래와 같이 출력됩니다.
 
     ## 프로젝트 삭제 결과
     ```
