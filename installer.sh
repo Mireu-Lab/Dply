@@ -1,11 +1,14 @@
 #!/bin/sh
 
 pythonInstall() {
+    echo "\n\n++ Python Install\n\n"
     sudo apt-get update
-    sudo apt-get install python3 python3-pip
+    sudo apt-get install python3.10 python3-pip
 }
 
 dockerInstall() {
+    echo "\n\n++ Docker Install\n\n"
+
     sudo apt-get update
     distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
     curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
@@ -17,6 +20,8 @@ dockerInstall() {
 }
 
 dockerSSHImage() {
+    echo "\n\n++ SSH Container Pull\n\n"
+
     #SSH Container Image
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:centossshcotainer
     docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:ubuntusshcontainer
@@ -30,6 +35,8 @@ dockerSSHImage() {
 }
 
 dockerJupyterImage() {
+    echo "\n\n++ Jupyter Container Pull\n\n"
+
     #Jupyter Container Image
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupytercentos
     docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
@@ -43,11 +50,22 @@ dockerJupyterImage() {
 }
 
 dockerDataBaseImage() {
+    echo "\n\n++ Database Container Pull\n\n"
+
     # Database Container Image
     docker pull mysql:latest
     docker pull mariadb:latest
     docker pull mongo:latest
     docker pull redis:latest
+}
+
+gpuSetting() {
+    pip3 install tensorflow
+    cat gpuSetting
+
+    python3 install.py
+
+    pip3 uninstall tensorflow -y
 }
 
 cat asciiArt
@@ -62,13 +80,16 @@ if cat /etc/issue | grep -q -e Ubuntu -e ubuntu ; then
     pythonInstall
     dockerInstall
 
+    gpuSetting
+
     dockerSSHImage
     dockerJupyterImage
     dockerDataBaseImage
-
+    
     echo "\n\n\n+Complete basic system installation"
 
-    docker-compose up --build -d
+    docker-compose up -d
+    rm env/.env
 
     echo "Done!"
 else

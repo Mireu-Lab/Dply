@@ -2,10 +2,14 @@ version: '3.4'
 
 services:
   system_api:
-    image: imageName
+    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:v0.0.1
     restart: always
     container_name: Container-Build-Management-Mastering-Program
+    ports:
+      - 8080:80
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    ports:
-      - 8120:80
+      - "/etc/dply/sql:/API/SQL:ro"
+      - "/var/log/dply:/API/Log:ro"
+    env_file:
+      - env/.env
