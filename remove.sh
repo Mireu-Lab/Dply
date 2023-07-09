@@ -7,7 +7,7 @@ removeSetting() {
     python3 src/remove.py
     pip3 uninstall docker
 
-    rm -rf /etc/dply /var/log
+    rm -rf /var/log
 }
 
 dockerImageRemove() {
