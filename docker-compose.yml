@@ -9,7 +9,10 @@ services:
       - 8080:80
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/etc/dply/sql:/API/SQL"
+      - "dply_program_sqlvolume:/API/SQL"
       - "/var/log/dply:/API/Log"
     env_file:
       - env/.env
+
+volumes:
+  dply_program_sqlvolume:
