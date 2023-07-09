@@ -61,14 +61,14 @@ dockerDataBaseImage() {
 
 gpuSetting() {
     pip3 install tensorflow
-    cat gpuSetting
+    cat install/gpuSetting
 
     python3 install.py
 
     pip3 uninstall tensorflow -y
 }
 
-cat asciiArt
+cat install/asciiArt
 
 if [ $(id -u) -ne 0 ]; then
     echo "\n\nplease run as root"
