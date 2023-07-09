@@ -63,7 +63,7 @@ gpuSetting() {
     pip3 install tensorflow
     cat install/gpuSetting
 
-    python3 install.py
+    python3 src/install.py
 
     pip3 uninstall tensorflow -y
 }

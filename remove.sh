@@ -4,7 +4,7 @@ removeSetting() {
     echo "\n\n++ Container Remove\n\n"
 
     pip3 install docker
-    python3 remove.py
+    python3 src/remove.py
     pip3 uninstall docker
 
     rm -rf /etc/dply /var/log
