@@ -4,9 +4,7 @@ removeSetting() {
     echo "\n\n++ Container Remove\n\n"
 
     pip3 install docker
-
     python3 remove.py
-
     pip3 uninstall docker
 
     rm -rf /etc/dply /var/log
@@ -16,7 +14,8 @@ dockerImageRemove() {
     echo "\n\n++ Docker Images Remove\n\n"
 
     #SSH Container Image
-    docker rmi registry.gitlab.com/container-images4/docker-ssh-conteiner:centossshcotainer\
+    docker rmi registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api\
+                registry.gitlab.com/container-images4/docker-ssh-conteiner:centossshcotainer\
                 registry.gitlab.com/container-images4/docker-ssh-conteiner:ubuntusshcontainer\
                 registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer\
                 registry.gitlab.com/container-images4/docker-ssh-conteiner:tensorflowsshcontainer\
@@ -45,5 +44,9 @@ if [ $(id -u) -ne 0 ]; then
     exit
 fi
 
+docker-compose down
+
 removeSetting
 dockerImageRemove
+
+echo "\n\n\nDone!"

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   system_api:
-    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:v0.0.1
+    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api
     restart: always
     container_name: Container-Build-Management-Mastering-Program
     ports:
