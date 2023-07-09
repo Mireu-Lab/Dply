@@ -2,20 +2,17 @@ version: '3.4'
 
 services:
   system_api:
-    image: imageName
+    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api
     restart: always
     container_name: Container-Build-Management-Mastering-Program
     ports:
-      - 8120:80
-    depends_on:
-      - database
-
-  database:
-    image: mariadb:latest
-    restart: always
-    container_name: Container-Build-Management-Mastering-Program
+      - 8080:80
     volumes:
-      - Container-Build-Management-Mastering-Program_Database:/var/lib/mysql
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "dply_program_sqlvolume:/API/SQL"
+      - "/var/log/dply:/API/Log"
+    env_file:
+      - env/.env
 
 volumes:
-  Container-Build-Management-Mastering-Program_Database:
+  dply_program_sqlvolume:

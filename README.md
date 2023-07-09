@@ -1,92 +1,316 @@
 # Container Build Management Mastering Program
 
+<br><br>
+
+# Install
+
+The library installed by the program is as follows.
+
+- python3
+- python3-pip
+- docker
+- nvidia-docker2
+- docker-compose
+
+<br><br>
+
+> In addition, the OS supported by the system is **Ubuntu**, which is not supported by other OSes.
 
 
-## Getting started
+The execution code is as follows.
+```bash
+$ sudo sh install.sh
+```
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+# Remove
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Please check again whether the container is working or the data has been subtracted before executing the command.\
+This command deletes containers, volumes, and networks created by Dply.
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/individual-projects2/container-build-management-mastering-program.git
-git branch -M main
-git push -uf origin main
+sudo sh remove.sh
 ```
 
-## Integrate with your tools
+# API v0.0.1
 
-- [ ] [Set up project integrations](https://gitlab.com/individual-projects2/container-build-management-mastering-program/-/settings/integrations)
+The functions supported by the API are implemented as follows.
 
-## Collaborate with your team
+- [Build](#build) #Deploy project containers
+- [Status](#status) #Change the status of the project container
+- [Delete](#delete) #Delete Project
+- [Search](#search) #Project information
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+<br>
 
-## Test and Deploy
+## Build
 
-Use the built-in continuous integration in GitLab.
+The API is a program for deploying development environment containers.\
+The parameters required to use the API are as follows.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+|    Variable Name | Type | Default | Description |
+| :----------: | :--: | :-----: | :-------------------------------------------: |
+| projectName | str | - | Project Name |
+|  Processor | str | CPU | Processor Allocation Parameters |
+|      OS | str | Ubuntu | Development Environment Container Operating System Allocation Parameters |
+|     Type | str | Jupiter | Development Environment Container Access Method Allocation Parameters |
+|   Password | str | None | Project Distribution Container Password Allocation Parameters |
+| databaseList | list | None | Database Container Deployment Allocation Parameters |
 
-***
+<br>
 
-# Editing this README
+The result is output as shown below.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+<br>
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+The API also specifies the types that it supports.\
+The specified type is configured as follows.
 
-## Name
-Choose a self-explaining name for your project.
+| Variable Name | Type | Support Type (Case Check) |
+| :------------: | :----: | :----------------------------: |
+| Processor    | str  | CPU, GPU                     |
+| OS           | str  | ubuntu, centos, rockylinux, tensorflow   |
+| Type         | str  | SSH, Jupyter                 |
+| databaseList | list | mysql, mariadb, mongo, redis |
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+<br>
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+You have to check the case and enter the college to avoid errors.\
+In addition, these character interpretations are implemented without a separate filter.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Status Code
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+#### Status Code 200
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+The error was successfully distributed
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```json
+{
+    "devContainer": {
+        "status": int,
+        "port": int
+    },
+    "databaseContainer": [
+        {
+            "database": str,
+            "status": bool
+        },
+        ...
+    ]
+}
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+#### Status Code 400
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+The corresponding error may occur when the Docker Image is not Full.
+Run the installer again and process it.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```json
+{
+    "msg": "You do not have permission.",
+    "NotBuildContainer": "The name is already registered."
+}
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
+#### Status Code 503
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+The error is an error that occurs when the project name is duplicated.
+Try again by changing the project name to another one.
+
+```json
+{
+    "msg": "You do not have permission.",
+    "NotBuildContainer": "The name is already registered."
+}
+```
+
+<br><br>
+
+## Status
+
+This function is a program for managing the execution of project containers.\
+The parameters required to use the API are as follows.
+
+<br>
+
+|   Variable Name | Type | Default | Description |
+| :---------: | :--: | :----: | :-----------: |
+| projectName | str | - | Project Name |
+| statusSetting | str | - | Project Container Status Information |
+
+<br>
+
+The result is output as shown below.
+
+<br><br>
+
+### Status Code
+#### Status Code 200
+
+```json
+{
+    "Status": {
+        "devContainer": bool,
+        "databaseContainer": {
+            str: bool,
+            ...
+        }
+    },
+}
+```
+
+<br><br>
+
+#### Status Code 404
+
+```json
+{
+    "msg": "Not found",
+    "NotFoundProjects": "Projects that cannot be found"
+}
+```
+
+<br><br>
+
+
+## Delete
+
+The API is a program for deleting development environment containers.
+
+The parameters required to use the API are as follows.
+
+|   Variable Name | Type | Default | Description |
+| :---------: | :--: | :----: | :-----------: |
+| projectName | str | - | Project Name |
+
+The result value is output as follows.
+
+<br><br>
+
+### Status Code
+#### Status Code 200
+
+Project Delete Results
+
+```json
+{
+    "projectName": str,
+    "projectStatus": {
+        "devContainer": bool,
+        "databaseContainers": {
+            str: bool,
+            ...
+        },
+        "containersNetwork": bool,
+        "containersVolume": bool
+    },
+}
+```
+
+<br><br>
+
+#### Status Code 404
+
+If a project has already been deleted or is missing
+
+```json
+{
+    "msg": "Not found",
+    "NotFoundProjects": "Projects that cannot be found"
+}
+```
+
+<br><br>
+
+## Search
+
+The API is a program for deleting development environment containers.\
+The parameters required to use the API are as follows.
+
+|   Variable Name | Type | Default | Description |
+| :---------: | :--: | :----: | :-----------: |
+| projectName | str | None | Project Name |
+
+
+The function will also print **single project information** if the value 'projectName' is entered and **multiple project information** if not entered.
+
+The result is output as shown below.
+
+<br><br>
+
+### Status Code
+
+#### Status Code 200
+
+- [Single Project Information](#single-project-information)
+- [Multiple Project Information](#multiple-project-information)
+- [No data from multiple project information](#no-data-from-multiple-project-information)
+
+<br><br>
+
+##### Single Project Information
+
+```json
+{
+    "projectName": str,
+    "createdTimes": float,
+    "devContainer": {
+        "type": str,
+        "gpu": bool,
+        "status": bool,
+        "port": int,
+    },
+    "databaseContainers": {
+        str: {
+            "status": bool,
+            "ip": str,
+        },
+        ...
+    }
+}
+```
+
+<br>
+
+##### Multiple Project Information
+
+```json
+[
+    {
+        "projectName": str,
+        "devContainer": {
+            "Type": str,
+            "status": bool,
+            "port": int,
+            "gpu": int,
+            "createdTimes": float,
+        },
+        "databaseContainer": [
+            str,
+            ...
+        ],
+    },
+    ...
+]
+```
+
+<br>
+
+##### No data from multiple project information
+
+```json
+[]
+```
+
+
+### Status Code 404
+
+Project information not found
+
+```json
+{
+    "msg": "Not found",
+    "NotFoundProjects": "Projects that cannot be found"
+}
+```
