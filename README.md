@@ -4,32 +4,64 @@
 
 # Install
 
+<br>
+
+## Version
+
 The library installed by the program is as follows.
 
 - python3
 - python3-pip
 - docker
+- nvidia driver
+- cuda 11.8
+- cuDNN
 - nvidia-docker2
 - docker-compose
 
-<br><br>
+<br>
 
 > In addition, the OS supported by the system is **Ubuntu**, which is not supported by other OSes.
 
 
+**Other drivers should be installed by the user himself.**
+
+<br>
+
+Supported OS versions are as follows.
+
+|  Operating System     | Version                                 |
+| :----------: | :----------------------------------------: |
+| Ubuntu 22.04 | GPUlatest, CPUlatest, GPUv0.0.1, CPUv0.0.1 |
+
+<br><br>
+
+### Code
+
 The execution code is as follows.
+
 ```bash
-$ sudo sh install.sh
+sudo sh install.sh
 ```
+
+<br><br>
 
 # Remove
 
 Please check again whether the container is working or the data has been subtracted before executing the command.\
 This command deletes containers, volumes, and networks created by Dply.
 
-```
+<br>
+
+## Code
+
+The execution code is as follows.
+
+```bash
 sudo sh remove.sh
 ```
+
+<br><br>
 
 # API v0.0.1
 
