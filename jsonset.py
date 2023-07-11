@@ -5,7 +5,6 @@ from enum import Enum
 class buildInfo(BaseModel):
     projectName: str  # 프로젝트 이름
 
-    Processor: str = "CPU"  # 개발환경 컨테이너 할당 프로세서
     OS: str = "ubuntu"  # 개발환경 컨테이너 OS
 
     Type: str = "Jupyter"  # 개발환경 컨테이너 접속 방식

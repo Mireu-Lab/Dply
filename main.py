@@ -104,7 +104,6 @@ async def containerBuild(buildInfo: buildInfo):
             buildInfo.OS,
             buildInfo.password,
             buildInfo.databaseList,
-            buildInfo.Processor,
         )  # 컨테이너 빌드 파라미터 기본값
 
         # 컨테이너 접속 타입 빌드

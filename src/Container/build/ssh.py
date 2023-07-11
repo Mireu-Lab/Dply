@@ -34,7 +34,6 @@ def sshBuild(self) -> dict:
             name=f"Build_Management_{self.containerOS}_ssh_{self.projectName}",  # 도커 컨테이너 이름 파라미터
             ports={"22/tcp": self.port},  # 컨테이너 Port 할당 파라미터
             environment={"PASSWORD": self.password},  # 컨테이너 기본 Password 파라미터
-            device_requests=self.gpuSetting,  # GPU할당 파라미터
             network=self.projectNetworks,  # 프로젝트 컨테이너 네트워크 할당 파라미터
             volumes={
                 self.devContainerVolumes: {"bind": "/workspace", "mode": "rw"}
