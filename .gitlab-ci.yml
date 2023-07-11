@@ -12,17 +12,19 @@ stages:
 
 dev:
   stage: dev
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev" .
-    - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev"
-  # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
         - dockerfile
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev" .
+    - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev"
+  # Run this job in a branch where a Dockerfile exists
 
 version:
   stage: version
+  only:
+    - tags
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}" .
     - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}"
