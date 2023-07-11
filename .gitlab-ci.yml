@@ -15,19 +15,22 @@ dev:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev" .
     - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev"
-  # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
         - dockerfile
+  only:
+  - CPU_API
+  - GPU_API
 
 version:
   stage: version
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}" .
     - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}"
-  # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
         - dockerfile
+  only:
+    - tags
