@@ -23,10 +23,6 @@ def sshBuild(self) -> dict:
     # 컨테이너 이미지 할당 값
     Tag = Setting_ENV["containerImageURL"]["SSH"]["TAG"].replace("0", self.containerOS)
 
-    # GPU 프로세서 할당 시 이미지 변경
-    if self.gpuSetting != None:
-        Tag = "gpu" + Tag
-
     try:
         self.devContainerID = DockerClient.containers.create(
             f"""{Setting_ENV["containerImageURL"]["SSH"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터

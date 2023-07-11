@@ -28,11 +28,7 @@ def jupyterBuild(self) -> dict:
     Tag = Setting_ENV["containerImageURL"]["Jupyter"]["TAG"].replace(
         "0", self.containerOS
     )
-
-    # GPU 프로세서 할당 시 이미지 변경
-    if self.gpuSetting != None:
-        Tag = "gpu" + Tag
-
+    
     try:
         self.devContainerID = DockerClient.containers.create(
             f"""{Setting_ENV["containerImageURL"]["Jupyter"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
