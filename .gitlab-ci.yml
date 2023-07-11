@@ -16,12 +16,9 @@ dev:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev" .
     - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}_Dev"
   rules:
-    - if: $CI_COMMIT_BRANCH
+    - if: '${CI_COMMIT_TAG} == ""'
       exists:
         - dockerfile
-  only:
-  - CPU_API
-  - GPU_API
 
 version:
   stage: version
@@ -29,8 +26,6 @@ version:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}" .
     - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_REF_SLUG}"
   rules:
-    - if: $CI_COMMIT_BRANCH
+    - if: '${CI_COMMIT_TAG} != ""'
       exists:
         - dockerfile
-  only:
-    - tags
