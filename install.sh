@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VersionType = "CPU"
+
 programDefaultInstall()
 {
     echo "\n\n++ Python Install\n\n"
@@ -83,6 +85,7 @@ programVersion() {
                     --menu "Please select a program type" 10 40 3 1 "CPU" 2 "GPU" \
                     2>&1 >/dev/tty)
         do
+            VersionType = $choice
             case $choice in
                 1) 
                     break;;
@@ -95,6 +98,37 @@ programVersion() {
             esac
         done
     clear
+}
+
+Image = 0
+
+APIContainerRun() {
+    case $VersionType in
+        "GPU") 
+            docker pull registry.gitlab.com/individual-projects2/container-build-management-mastering-program:gpu-v0-0-1
+            docker run -p 8080:80\
+                    -v /var/run/docker.sock:/var/run/docker.sock\
+                    -v /var/log/dply:/API/Log\
+                    -v dply_program_sqlvolume:/API/SQL\
+                    --env-file env/.env\
+                    --restart always\
+                    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:gpu-v0-0-1
+            break;;
+
+        "CPU") 
+            docker pull registry.gitlab.com/individual-projects2/container-build-management-mastering-program:cpu-v0-0-1
+            docker run -p 8080:80\
+                    -v /var/run/docker.sock:/var/run/docker.sock\
+                    -v /var/log/dply:/API/Log\
+                    -v dply_program_sqlvolume:/API/SQL\
+                    --env-file env/.env\
+                    --restart always\
+                    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:cpu-v0-0-1
+            break;;
+
+        *)
+            break;;
+    esac
 }
 
 cat install/asciiArt
@@ -121,8 +155,10 @@ if cat /etc/issue | grep -q -e Ubuntu -e ubuntu ; then
 
     echo "\n\n\n+Complete basic system installation"
 
-    # docker-compose up -d
-    # rm env/.env
+    docker volume create dply_program_sqlvolume
+    APIContainerRun
+    
+    rm env/.env
 
     echo "Done!"
 else
