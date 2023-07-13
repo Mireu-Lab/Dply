@@ -33,6 +33,13 @@ sudo sh remove.sh
 
 # API v0.0.1
 
+The program is implemented as FastAPI and information can be obtained through Docs in FastAPI.
+The FastAPI connection method is as follows.
+
+> http://[IP]:8080/docs
+
+<br>
+
 The functions supported by the API are implemented as follows.
 
 - [Build](#build) #Deploy project containers
