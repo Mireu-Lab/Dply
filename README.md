@@ -104,7 +104,7 @@ docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpuco
 
 ## DataBase
 
-```shell
+```
 docker pull mysql:latest 
 docker pull mariadb:latest
 docker pull mongo:latest
@@ -112,6 +112,27 @@ docker pull redis:latest
 ```
 
 Note: Installer support will be provided in future updates.
+
+
+
+# API Run
+
+In this version, the completeness of the API may be low.
+
+Also, the program is structured into CPU and GPU versions, so please execute the API based on your environment.
+
+```shell
+docker volume create dply_program_sqlvolume
+
+docker run -d \
+    --name Container-Build-Management-Mastering-Program \
+    -p 8080:80 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v dply_program_sqlvolume:/API/SQL \
+    -v /var/log/dply:/API/Log \
+    --env-file env/.env \
+    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:{processor}-v{version}
+```
 
 
 
