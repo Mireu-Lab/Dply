@@ -4,32 +4,126 @@
 
 # Install
 
-The library installed by the program is as follows.
+The libraries installed by the program are as follows.
 
-- python3
-- python3-pip
-- docker
-- nvidia-docker2
-- docker-compose
+- [curl](#curl)
+- [python3](#python)
+- [python3-pip](#python)
+- [docker](#docker)
+- [docker-compose](#docker)
+- [nvidia-docker2](#nvidia-docker)
 
 <br><br>
 
-> In addition, the OS supported by the system is **Ubuntu**, which is not supported by other OSes.
+> Additionally, the system only supports the **Ubuntu** OS and is not compatible with other operating systems.
+
+To run this program, the following programs need to be installed using the provided commands.
 
 
-The execution code is as follows.
-```bash
-$ sudo sh install.sh
+
+## Curl
+
+```shell
+sudo apt-get install curl
 ```
+
+
+
+## Docker
+
+```
+sudo apt-get install docker\
+                 docker.io\
+                 docker-compose
+```
+
+
+
+## Python
+
+```shell
+sudo apt-get install python3\
+                 python3-pip
+```
+
+
+
+## Nvidia Docker (optional)
+
+```shell
+sudo apt-get update
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update
+sudo apt-get install -y nvidia-docker2
+sudo systemctl restart docker
+```
+
+
+
+
+
+# Container
+
+This program deploys development environment containers using Docker API, so you need to install Container Images locally from the source. The installation process is as follows:
+
+
+
+## CPU
+
+```shell
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:centossshcotainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:ubuntusshcontainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:rockylinuxsshcontainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:tensorflowsshcontainer
+
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupytercentos
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterubuntu
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupyterrockylinux
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:containerjupytertensorflow
+```
+
+
+
+## GPU (optional)
+
+```shell
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpucentossshcontainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpuubuntusshcontainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gpurockylinuxsshcontainer
+docker pull registry.gitlab.com/container-images4/docker-ssh-conteiner:gputensorflowsshcontainer
+
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupytercentos
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterubuntu
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupyterrockylinux
+docker pull registry.gitlab.com/container-images4/docker-jupyter-container:gpucontainerjupytertensorflow
+```
+
+
+
+## DataBase
+
+```shell
+docker pull mysql:latest 
+docker pull mariadb:latest
+docker pull mongo:latest
+docker pull redis:latest
+```
+
+Note: Installer support will be provided in future updates.
+
+
 
 # Remove
 
-Please check again whether the container is working or the data has been subtracted before executing the command.\
-This command deletes containers, volumes, and networks created by Dply.
+Before executing the command, please check if the container is working or if the data has been backed up. The following command will delete containers, volumes, and networks created by Dply.
 
-```
+```shell
 sudo sh remove.sh
 ```
+
+
 
 # API v0.0.1
 
