@@ -1,13 +1,5 @@
 from src.error import ERROR
-from src.set import DataBase
-
-from dotenv import load_dotenv
-from os import getenv
-
-load_dotenv()
-
-gpuSetting = int(getenv("GPUSetting"))  # 사용자 지정 GPU할당값
-
+from src.setting import DataBase, settingENVRead
 
 def GPUScheduler() -> int | None:
     """
@@ -20,8 +12,8 @@ def GPUScheduler() -> int | None:
     try:
         gpuDevice = []
 
-        if gpuSetting > 0:
-            for gpuDevices in range(gpuSetting):
+        if settingENVRead["GPU"]["Status"] == True:
+            for gpuDevices in settingENVRead["GPU"]["List"]:
                 DataBase.execute(
                     f"select `GPU` from `devContainer` WHERE `GPU` NOT NULL and `GPU` = {gpuDevices - 1};"
                 )

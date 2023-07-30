@@ -1,5 +1,5 @@
 from src.error import ERROR
-from src.set import DataBase
+from src.setting import DataBase
 
 from dotenv import load_dotenv
 from os import getenv

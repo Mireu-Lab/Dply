@@ -1,5 +1,5 @@
 from src.error import ERROR
-from src.set import DockerClient, time
+from src.setting import DockerClient, time, settingENVRead
 
 from .lib.randomPort import randomPort
 from .lib.gpuScheduler import GPUScheduler
@@ -62,13 +62,15 @@ class Build:
 
         """GPU 프로세서 할당 처리"""
         if self.processorType == "GPU" or self.processorType == "gpu":
-            self.gpuID = str(GPUScheduler())
+            if settingENVRead["GPU"]["Status"] == True:
+                self.gpuID = str(GPUScheduler())
 
-            self.gpuSetting = [
-                docker.types.DeviceRequest(
-                    device_ids=[self.gpuID], capabilities=[["gpu"]]
-                )
-            ]
+                self.gpuSetting = [
+                    docker.types.DeviceRequest(
+                        device_ids=[self.gpuID], capabilities=[["gpu"]]
+                    )
+                ]
+            
 
     def ssh(self) -> dict:
         """
