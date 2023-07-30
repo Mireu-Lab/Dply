@@ -1,5 +1,10 @@
 {
     "SQL": "SQL/SQL.sqlite",
+    "GPU": {
+        "Status": false,
+        "List": null
+    },
+
     "OS": [
         "ubuntu",
         "centos",

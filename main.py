@@ -107,6 +107,14 @@ async def containerBuild(buildInfo: buildInfo):
             buildInfo.Processor,
         )  # 컨테이너 빌드 파라미터 기본값
 
+        # 시스템 GPU 확인
+        if buildInfo.Processor == "GPU" and ContainerBuilderClass.gpuID == None:
+            return ERROR.API_Error_Messages(
+                403, 
+                "SystemProcessorConfigurationError",
+                "Your system does not support the processor you want. Please select a different processor."
+            )
+
         # 컨테이너 접속 타입 빌드
         if buildInfo.Type == "Jupyter" or buildInfo.Type == "jupyter":
             devContainerBuilder = ContainerBuilderClass.jupyter()
@@ -310,5 +318,5 @@ async def containerFind(projectName: str = None):
 
 if __name__ == "__main__":
     import uvicorn
-
+    
     uvicorn.run(api, host="0.0.0.0", port=80)
