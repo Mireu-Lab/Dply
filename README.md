@@ -125,13 +125,12 @@ Also, the program is structured into CPU and GPU versions, so please execute the
 docker volume create dply_program_sqlvolume
 
 docker run -d \
-    --name Container-Build-Management-Mastering-Program \
+    --name dply-program \
     -p 8080:80 \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v dply_program_sqlvolume:/API/SQL \
     -v /var/log/dply:/API/Log \
-    --env-file env/.env \
-    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:{processor}-v{version}
+    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:[processor]-v[version]
 ```
 
 
