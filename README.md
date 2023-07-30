@@ -130,7 +130,7 @@ docker run -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v dply_program_sqlvolume:/API/SQL \
     -v /var/log/dply:/API/Log \
-    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:[processor]-v[version]
+    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api
 ```
 
 
@@ -145,7 +145,7 @@ sudo sh remove.sh
 
 
 
-# API v0.0.1
+# API v0.0.2
 
 The program is implemented as FastAPI and information can be obtained through Docs in FastAPI.
 The FastAPI connection method is as follows.
@@ -247,6 +247,20 @@ Try again by changing the project name to another one.
 ```
 
 <br><br>
+
+#### Status Code 403
+
+This error is an error that occurs when the computing system attempts to assign an unprovided processor.
+
+```json
+{
+  "msg": "You do not have permission.",
+  "SystemProcessorConfigurationError": "Your system does not support the processor you want. Please select a different processor."
+}
+```
+
+<br><br>
+
 
 ## Status
 
