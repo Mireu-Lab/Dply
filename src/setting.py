@@ -1,5 +1,5 @@
 from src.error import ERROR  # 자체 에러 관리용 Class
-from src.setting import GPUCheck, GPURange
+from src.set import GPUCheck, GPURange
 from json import load, dump  # Setting ENV JSON 라이브러리
 
 import sqlite3 # SQLSDK 라이브러리
