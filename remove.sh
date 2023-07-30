@@ -50,5 +50,6 @@ removeSetting
 dockerImageRemove
 
 docker rm dply-program
+docker volume rm dply_program_sqlvolume
 
 echo "\n\n\nDone!"
