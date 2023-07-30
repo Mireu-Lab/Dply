@@ -44,9 +44,11 @@ if [ $(id -u) -ne 0 ]; then
     exit
 fi
 
-docker-compose down
+docker stop dply-program
 
 removeSetting
 dockerImageRemove
+
+docker rm dply-program
 
 echo "\n\n\nDone!"
