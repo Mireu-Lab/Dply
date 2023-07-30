@@ -1,4 +1,4 @@
-from src.setting import time
+from src.set import time
 
 from .lib.projectContainerID import projectContainerIDs
 

@@ -1,5 +1,5 @@
 from src.error import ERROR
-from src.setting import Setting_ENV, DockerClient
+from src.setting import settingENVRead, DockerClient
 
 from .lib.sqlWrite import devContainer as devContainer_sqlWrite
 from .lib.containerRemove import devContainer as devContainer_remove
@@ -25,7 +25,7 @@ def jupyterBuild(self) -> dict:
     status = 500
 
     # 컨테이너 이미지 할당 값
-    Tag = Setting_ENV["containerImageURL"]["Jupyter"]["TAG"].replace(
+    Tag = settingENVRead["containerImageURL"]["Jupyter"]["TAG"].replace(
         "0", self.containerOS
     )
 
@@ -35,7 +35,7 @@ def jupyterBuild(self) -> dict:
 
     try:
         self.devContainerID = DockerClient.containers.create(
-            f"""{Setting_ENV["containerImageURL"]["Jupyter"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
+            f"""{settingENVRead["containerImageURL"]["Jupyter"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
             hostname=self.projectName,  # 컨테이너 호스트 이름 파라미터
             name=f"Build_Management_{self.containerOS}_jupyter_{self.projectName}",  # 도커 컨테이너 이름 파라미터
             ports={"8888/tcp": self.port},  # 컨테이너 Port 할당 파라미터

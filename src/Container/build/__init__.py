@@ -1,5 +1,6 @@
 from src.error import ERROR
-from src.setting import DockerClient, time, settingENVRead
+from src.setting import DockerClient, settingENVRead
+from src.set import time
 
 from .lib.randomPort import randomPort
 from .lib.gpuScheduler import GPUScheduler

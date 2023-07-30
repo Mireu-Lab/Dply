@@ -1,5 +1,5 @@
 from src.error import ERROR
-from src.setting import Setting_ENV, DockerClient
+from src.setting import settingENVRead, DockerClient
 
 from .lib.sqlWrite import devContainer as devContainer_sqlWrite
 from .lib.containerRemove import devContainer as devContainer_remove
@@ -21,7 +21,7 @@ def sshBuild(self) -> dict:
     status = 500
 
     # 컨테이너 이미지 할당 값
-    Tag = Setting_ENV["containerImageURL"]["SSH"]["TAG"].replace("0", self.containerOS)
+    Tag = settingENVRead["containerImageURL"]["SSH"]["TAG"].replace("0", self.containerOS)
 
     # GPU 프로세서 할당 시 이미지 변경
     if self.gpuSetting != None:
@@ -29,7 +29,7 @@ def sshBuild(self) -> dict:
 
     try:
         self.devContainerID = DockerClient.containers.create(
-            f"""{Setting_ENV["containerImageURL"]["SSH"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
+            f"""{settingENVRead["containerImageURL"]["SSH"]["URL"]}:{Tag}""",  # 컨테이너 이미지 파라미터
             hostname=self.projectName,  # 컨테이너 할당 이름 파라미터
             name=f"Build_Management_{self.containerOS}_ssh_{self.projectName}",  # 도커 컨테이너 이름 파라미터
             ports={"22/tcp": self.port},  # 컨테이너 Port 할당 파라미터
