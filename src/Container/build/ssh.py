@@ -44,14 +44,15 @@ def sshBuild(self) -> dict:
         status = 200  # 컨테이너 생성 성공시 변경
         DockerClient.containers.get(self.devContainerID).start()  # 컨테이너 최종 확인후 실행
 
+        devContainer_sqlWrite(self, "SSH", status)  # SQL 개발 컨테이너 정보 입력
+
     except docker.errors.ImageNotFound:
+        devContainer_remove(self)  # 컨테이너 빌드 실패시 삭제
         status = 400  # 컨테이너 생성 실패시 변경
 
     except:
         ERROR.Logging()
         devContainer_remove(self)  # 컨테이너 빌드 실패시 삭제
         status = 500  # 컨테이너 생성 실패시 변경
-
-    devContainer_sqlWrite(self, "SSH", status)  # SQL 개발 컨테이너 정보 입력
 
     return {"status": status, "port": self.port}
