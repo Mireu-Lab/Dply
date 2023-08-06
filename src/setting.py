@@ -6,7 +6,6 @@ import sqlite3 # SQLSDK 라이브러리
 import docker  # Docker SDK 라이브러리
 
 settingENVRead = load(open("Setting/Setting.json", "r"))
-settingENVWrite = open("Setting/Setting.json", "w")
 
 # SQL Setup
 print("SQL Check : ", end="")
@@ -36,7 +35,9 @@ try:
     
     settingENVRead["GPU"]["Status"] = GPUCheck()
     settingENVRead["GPU"]["List"] = GPURange()
-    dump(settingENVRead, settingENVWrite, indent="\t")
+
+    with open("Setting/Setting.json", "w") as settingENVWrite:
+        dump(settingENVRead, settingENVWrite, indent=2)
 
 except:
     pass
