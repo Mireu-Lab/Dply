@@ -65,7 +65,7 @@ class Build:
         if self.processorType == "GPU" or self.processorType == "gpu":
             if settingENVRead["GPU"]["Status"] == True:
                 self.gpuID = str(GPUScheduler())
-
+                
                 self.gpuSetting = [
                     docker.types.DeviceRequest(
                         device_ids=[self.gpuID], capabilities=[["gpu"]]
@@ -82,7 +82,7 @@ class Build:
         ```
         {
             "status": bool,
-            "port": tnt
+            "port": int
         }
         ```
         """
