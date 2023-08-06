@@ -1,3 +1,4 @@
+import src.setting
 from src.error import ERROR
 from src.Container import (
     build as containerBuilder,
@@ -16,42 +17,48 @@ api = FastAPI()
 @api.post("/container/build", tags=["Container"])
 async def containerBuild(buildInfo: buildInfo):
     """
-    해당 API는 개발 환경 컨테이너를 배포 하기 위한 프로그램입니다.
+    # Build
 
-    해당 API를 사용하기 위해서 필요한 파라미터는 아래와 같습니다.
+    The API is a program for deploying development environment containers.\
+    The parameters required to use the API are as follows.
 
-    |    변수명    | 타입 | 기본값  |                     설명                      |
+    |    Variable Name | Type | Default | Description |
     | :----------: | :--: | :-----: | :-------------------------------------------: |
-    | projectName  | str  |    -    |                 프로젝트 이름                 |
-    |  Processor   | str  |   CPU   |            프로세서 할당 파라미터             |
-    |      OS      | str  | Ubuntu  |   개발환경 컨테이너 운영체제 할당 파라미터    |
-    |     Type     | str  | Jupyter |   개발환경 컨테이너 접속 방식 할당 파라미터   |
-    |   password   | str  |  None   | 프로젝트 배포 컨테이너 비밀번호 할당 파라미터 |
-    | databaseList | list |  None   |   데이터베이스 컨테이너 배포 할당 파라미터    |
+    | projectName | str | - | Project Name |
+    |  Processor | str | CPU | Processor Allocation Parameters |
+    |      OS | str | Ubuntu | Development Environment Container Operating System Allocation Parameters |
+    |     Type | str | Jupiter | Development Environment Container Access Method Allocation Parameters |
+    |   Password | str | None | Project Distribution Container Password Allocation Parameters |
+    | databaseList | list | None | Database Container Deployment Allocation Parameters |
 
-    결과값으로는 아래와 같이 출력된다.
+    <br>
 
-    또한 해당 API에서는 지원하는 타입이 지정되어있다.
+    The result is output as shown below.
 
-    지정된 타입은 아래와 같이 구성되어있다.
+    <br>
 
-    | 변수명       | 타입 | 지원 타입 (대소문자 확인)    |
+    The API also specifies the types that it supports.\
+    The specified type is configured as follows.
+
+    | Variable Name | Type | Support Type (Case Check) |
     | :------------: | :----: | :----------------------------: |
     | Processor    | str  | CPU, GPU                     |
     | OS           | str  | ubuntu, centos, rockylinux, tensorflow   |
     | Type         | str  | SSH, Jupyter                 |
     | databaseList | list | mysql, mariadb, mongo, redis |
 
-    대소문자 확인후 대입을 해야 에러 발생이 되지 않는다.
+    <br>
 
-    또한 이러한 문자 해석은 따로 필터를 거치지 않고 구현되어있다.
+    You have to check the case and enter the college to avoid errors.\
+    In addition, these character interpretations are implemented without a separate filter.
 
+    ## Status Code
 
-    ## Status Code 200
+    ### Status Code 200
 
-    해당 에러는 정상적으로 배포가 되었습니다.
+    The error was successfully distributed
 
-    ```
+    ```json
     {
         "devContainer": {
             "status": int,
@@ -59,20 +66,21 @@ async def containerBuild(buildInfo: buildInfo):
         },
         "databaseContainer": [
             {
-            "database": str,
-            "status": bool
-            }
+                "database": str,
+                "status": bool
+            },
+            ...
         ]
     }
     ```
 
 
-    ## Status Code 400
+    ### Status Code 400
 
-    해당 에러는 Docker Image가 Pull이 되지 않은경우 발생이 될수있는이슈입니다.
-    Installer를 다시 실행후 처리 하세요.
+    The corresponding error may occur when the Docker Image is not Full.
+    Run the installer again and process it.
 
-    ```
+    ```json
     {
         "msg": "You do not have permission.",
         "NotBuildContainer": "The name is already registered."
@@ -80,20 +88,31 @@ async def containerBuild(buildInfo: buildInfo):
     ```
 
 
-    ## Status Code 503
+    ### Status Code 503
 
-    해당 에러는 프로젝트 이름이 중복되었을때 발생되는 에러이다.
-    프로젝트 이름을 다른걸로 변경하여 재시도 하시오.
+    The error is an error that occurs when the project name is duplicated.
+    Try again by changing the project name to another one.
 
-    ```
+    ```json
     {
         "msg": "You do not have permission.",
         "NotBuildContainer": "The name is already registered."
     }
     ```
 
+    <br><br>
+
+    ### Status Code 403
+
+    This error is an error that occurs when the computing system attempts to assign an unprovided processor.
+
+    ```json
+    {
+        "msg": "You do not have permission.",
+        "SystemProcessorConfigurationError": "Your system does not support the processor you want. Please select a different processor."
+    }
+    ```
     """
-
     devContainerBuilder = None
     databaseContainers = None
 
@@ -108,40 +127,43 @@ async def containerBuild(buildInfo: buildInfo):
         )  # 컨테이너 빌드 파라미터 기본값
 
         # 시스템 GPU 확인
-        if buildInfo.Processor == "GPU" and ContainerBuilderClass.gpuID == None:
+        if (buildInfo.Processor == "GPU" and ContainerBuilderClass.gpuID != None) or buildInfo.Processor == "CPU":
+            # 컨테이너 접속 타입 빌드
+            if buildInfo.Type == "Jupyter" or buildInfo.Type == "jupyter":
+                devContainerBuilder = ContainerBuilderClass.jupyter()
+
+            elif buildInfo.Type == "SSH" or buildInfo.Type == "ssh":
+                devContainerBuilder = ContainerBuilderClass.ssh()
+
+            if devContainerBuilder["status"] == 200:
+                """데이터 베이스 컨테이너 빌드"""
+                if buildInfo.databaseList != None:
+                    databaseContainers = ContainerBuilderClass.database()
+
+                return {
+                    "devContainer": {
+                        "status": devContainerBuilder["status"],
+                        "port": devContainerBuilder["port"],
+                    },
+                    "databaseContainer": databaseContainers,
+                }
+
+            elif devContainerBuilder["status"] == 400:
+                return ERROR.API_Error_Messages(
+                    devContainerBuilder["status"],
+                    "NoContainerImage",
+                    "No container image required",
+                )  # 개발환경 컨테이너 빌드 에러인경우
+            
+            else:
+                return ERROR.API_Error_Messages(devContainerBuilder["status"])
+            
+        else:
             return ERROR.API_Error_Messages(
                 403, 
                 "SystemProcessorConfigurationError",
                 "Your system does not support the processor you want. Please select a different processor."
             )
-
-        # 컨테이너 접속 타입 빌드
-        if buildInfo.Type == "Jupyter" or buildInfo.Type == "jupyter":
-            devContainerBuilder = ContainerBuilderClass.jupyter()
-
-        elif buildInfo.Type == "SSH" or buildInfo.Type == "ssh":
-            devContainerBuilder = ContainerBuilderClass.ssh()
-
-        if devContainerBuilder["status"] == 200:
-            """데이터 베이스 컨테이너 빌드"""
-            if buildInfo.databaseList != None:
-                databaseContainers = ContainerBuilderClass.database()
-
-            return {
-                "devContainer": {
-                    "status": devContainerBuilder["status"],
-                    "port": devContainerBuilder["port"],
-                },
-                "databaseContainer": databaseContainers,
-            }
-
-        elif devContainerBuilder["status"] == 400:
-            return ERROR.API_Error_Messages(
-                devContainerBuilder["status"],
-                "NoContainerImage",
-                "No container image required",
-            )  # 개발환경 컨테이너 빌드 에러인경우
-
     else:
         return ERROR.API_Error_Messages(
             503, "NotBuildContainer", "The name is already registered."
@@ -151,18 +173,28 @@ async def containerBuild(buildInfo: buildInfo):
 @api.put("/project/container/status", tags=["Container"])
 async def projectContainerStatus(projectName: str, statusSetting: statusSetting):
     """
-    해당 함수는 프로젝트 컨테이너 실행 관리를 위한 프로그램입니다.
-    
-    해당 API를 사용하기 위해서 필요한 파라미터는 아래와 같습니다.
+    # Status
 
-    |   변수명    | 타입 | 기본값 |     설명      |
+    This function is a program for managing the execution of project containers.\
+    The parameters required to use the API are as follows.
+
+    <br>
+
+    |   Variable Name | Type | Default | Description |
     | :---------: | :--: | :----: | :-----------: |
-    | projectName | str  |   -    | 프로젝트 이름 |
-    | statusSetting | str  |   -    | 프로젝트 컨테이너 상태 정보 |
+    | projectName | str | - | Project Name |
+    | statusSetting | str | - | Project Container Status Information |
 
-    결과값으로는 아래와 같이 출력됩니다.
+    <br>
 
-    ## Status Code 200
+    The result is output as shown below.
+
+    <br><br>
+
+    ## Status Code
+    ### Status Code 200
+
+    ```json
     {
         "Status": {
             "devContainer": bool,
@@ -172,8 +204,11 @@ async def projectContainerStatus(projectName: str, statusSetting: statusSetting)
             }
         },
     }
+    ```
 
-    ## Status Code 404
+    <br><br>
+
+    ### Status Code 404
 
     ```json
     {
@@ -194,38 +229,51 @@ async def projectContainerStatus(projectName: str, statusSetting: statusSetting)
 @api.delete("/container/remove", tags=["Container"])
 async def containerRemove(projectName: str):
     """
-    해당 API는 개발 환경 컨테이너를 삭제 하기 위한 프로그램입니다.
+    # Delete
 
-    해당 API를 사용하기 위해서 필요한 파라미터는 아래와 같습니다.
+    The API is a program for deleting development environment containers.
 
-    |   변수명    | 타입 | 기본값 |     설명      |
+    The parameters required to use the API are as follows.
+
+    |   Variable Name | Type | Default | Description |
     | :---------: | :--: | :----: | :-----------: |
-    | projectName | str  |   -    | 프로젝트 이름 |
+    | projectName | str | - | Project Name |
 
-    결과값으로는 아래와 같이 출력됩니다.
+    The result value is output as follows.
 
-    ## 프로젝트 삭제 결과
-    ```
+    <br><br>
+
+    ## Status Code
+    ### Status Code 200
+
+    Project Delete Results
+
+    ```json
     {
         "projectName": str,
         "projectStatus": {
             "devContainer": bool,
-            "databaseContainers": dict[bool],
+            "databaseContainers": {
+                str: bool,
+                ...
+            },
             "containersNetwork": bool,
             "containersVolume": bool
         },
     }
     ```
 
-    # 프로젝트 삭제가 이미 되었거나 없는경우
+    <br><br>
 
-    ```
+    ### Status Code 404
+
+    If a project has already been deleted or is missing
+
+    ```json
     {
         "msg": "Not found",
         "NotFoundProjects": "Projects that cannot be found"
     }
-    ```
-
     """
     if containerSearch.containerNameCheck(projectName) == True:
         return containerDelete.remove(projectName).Project()  # 프로젝트 컨테이너 삭제
@@ -239,23 +287,28 @@ async def containerRemove(projectName: str):
 @api.get("/container/find", tags=["Container"])
 async def containerFind(projectName: str = None):
     """
-    해당 API는 개발 환경 컨테이너를 삭제 하기 위한 프로그램입니다.
+    # Search
 
-    해당 API를 사용하기 위해서 필요한 파라미터는 아래와 같습니다.
+    The API is a program for deleting development environment containers.\
+    The parameters required to use the API are as follows.
 
-    |   변수명    | 타입 | 기본값 |     설명      |
+    |   Variable Name | Type | Default | Description |
     | :---------: | :--: | :----: | :-----------: |
-    | projectName | str  |  None  | 프로젝트 이름 |
+    | projectName | str | None | Project Name |
 
 
-    또한 해당 기능은 `projectName` 값을 넣으면 **단일 프로젝트 정보**를 출력되며 넣지 않는경우 **복수 프로젝트 정보**를 출력하게된다.
+    The function will also print **single project information** if the value 'projectName' is entered and **multiple project information** if not entered.
 
-    결과값으로는 아래와 같이 출력된다.
+    The result is output as shown below.
 
+    <br><br>
 
-    ## 단일 프로젝트 정보
+    ## Status Code
 
-    ```
+    ### Status Code 200
+    #### Single Project Information
+
+    ```json
     {
         "projectName": str,
         "createdTimes": float,
@@ -269,15 +322,17 @@ async def containerFind(projectName: str = None):
             str: {
                 "status": bool,
                 "ip": str,
-            }
+            },
+            ...
         }
     }
     ```
 
+    <br>
 
-    ## 복수 프로젝트 정보
+    #### Multiple Project Information
 
-    ```
+    ```json
     [
         {
             "projectName": str,
@@ -289,24 +344,28 @@ async def containerFind(projectName: str = None):
                 "createdTimes": float,
             },
             "databaseContainer": [
-                str
+                str,
+                ...
             ],
         },
         ...
     ]
     ```
 
+    <br>
 
-    ## 복수 프로젝트 정보에서 데이터가 없는경우
+    #### No data from multiple project information
 
-    ```
+    ```json
     []
     ```
 
 
-    ## Status Code 404
+    ### Status Code 404
 
-    ```
+    Project information not found
+
+    ```json
     {
         "msg": "Not found",
         "NotFoundProjects": "Projects that cannot be found"
