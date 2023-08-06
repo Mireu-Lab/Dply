@@ -13,7 +13,7 @@ def GPUScheduler() -> int | None:
         gpuDevice = []
 
         if settingENVRead["GPU"]["Status"] == True:
-            for gpuDevices in settingENVRead["GPU"]["List"]:
+            for gpuDevices in range(settingENVRead["GPU"]["List"]):
                 DataBase.execute(
                     f"select `GPU` from `devContainer` WHERE `GPU` NOT NULL and `GPU` = {gpuDevices - 1};"
                 )
