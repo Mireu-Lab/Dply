@@ -39,6 +39,7 @@ def sshBuild(self) -> dict:
             volumes={
                 self.devContainerVolumes: {"bind": "/workspace", "mode": "rw"}
             },  # 프로젝트 컨테이너 볼륨 할당 파라미터
+            restart_policy={"Name": "always", "MaximumRetryCount": 3}
         ).short_id  # 컨테이너 ID 클래스 변수에 지정
 
         status = 200  # 컨테이너 생성 성공시 변경
