@@ -77,7 +77,7 @@ def databaseBuild(self) -> list:
                 environment=self.databaseSetting[0],  # 데이터베이스 컨테이너 비밀번호 처리 파라미터
                 network=self.projectNetworks,  # 도커 프로젝트 네트워크 할당 파라미터
                 volumes=self.databaseSetting[1],  # 도커 프로젝트 볼륨 할당 파라미터
-                restart_policy={"Name": "always", "MaximumRetryCount": 3}
+                restart_policy={"Name": "always"}
             ).short_id
 
         except:
