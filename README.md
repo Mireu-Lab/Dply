@@ -122,15 +122,7 @@ In this version, the completeness of the API may be low.
 Also, the program is structured into CPU and GPU versions, so please execute the API based on your environment.
 
 ```shell
-docker volume create dply_program_sqlvolume
-
-docker run -d \
-    --name dply-program \
-    -p 8080:80 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v dply_program_sqlvolume:/API/SQL \
-    -v /var/log/dply:/API/Log \
-    registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api
+docker-compose up -d
 ```
 
 
@@ -140,6 +132,7 @@ docker run -d \
 Before executing the command, please check if the container is working or if the data has been backed up. The following command will delete containers, volumes, and networks created by Dply.
 
 ```shell
+docker-compose down
 sudo sh remove.sh
 ```
 

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  dply-program:
+    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:api
+    container_name: dply-program
+    restart: always
+    runtime: nvidia  # GPU 지원을 위해 NVIDIA 런타임 사용
+    ports:
+      - "8080:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - dply_program_sqlvolume:/API/SQL
+      - /var/log/dply:/API/Log
+
+volumes:
+  dply_program_sqlvolume:
