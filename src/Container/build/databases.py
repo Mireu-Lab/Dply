@@ -67,6 +67,7 @@ def databaseBuild(self) -> list:
 
     for databases in self.databaseContainer:
         databaseContainerID = None
+        self.databaseSetting = None
         databaseVolume(self, databases)
 
         try:
