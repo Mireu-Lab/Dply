@@ -12,6 +12,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - dply_program_sqlvolume:/API/SQL
       - /var/log/dply:/API/Log
-
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+              
 volumes:
   dply_program_sqlvolume:
