@@ -64,11 +64,11 @@ class Build:
         """GPU 프로세서 할당 처리"""
         if self.processorType == "GPU" or self.processorType == "gpu":
             if settingENVRead["GPU"]["Status"] == True:
-                self.gpuID = str(GPUScheduler())
+                self.gpuID = GPUScheduler()
                 
                 self.gpuSetting = [
                     docker.types.DeviceRequest(
-                        device_ids=[self.gpuID], capabilities=[["gpu"]]
+                        device_ids=[str(self.gpuID)], capabilities=[["gpu"]]
                     )
                 ]
             

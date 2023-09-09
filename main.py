@@ -378,4 +378,4 @@ async def containerFind(projectName: str = None):
 if __name__ == "__main__":
     import uvicorn
     
-    uvicorn.run(api, host="0.0.0.0", port=80)
+    uvicorn.run(api, host="0.0.0.0", port=8080)
