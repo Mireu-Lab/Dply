@@ -10,8 +10,8 @@ services:
       - "8080:80"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - dply_program_sqlvolume:/API/SQL
-      - /var/log/dply:/API/Log
+      - /var/dply/sql:/API/SQL
+      - /var/dply/log:/API/Log
     deploy:
       resources:
         reservations:
