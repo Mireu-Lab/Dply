@@ -3,22 +3,5 @@
     "GPU": {
         "Status": false,
         "List": null
-    },
-
-    "OS": [
-        "ubuntu",
-        "centos",
-        "rockylinux",
-        "tensorflow"
-    ],
-    "containerImageURL": {
-        "SSH": {
-            "URL": "registry.gitlab.com/container-images4/docker-ssh-conteiner",
-            "TAG": "0sshcontainer"
-        },
-        "Jupyter": {
-            "URL": "registry.gitlab.com/container-images4/docker-jupyter-container",
-            "TAG": "containerjupyter0"
-        }
     }
 }

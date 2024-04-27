@@ -25,7 +25,7 @@ def devContainer(self) -> None:
 
         # volume list중 프로젝트 name이있는 volume만 삭제
         for containerID in DockerClient.volumes.list():
-            if (containerID.id).startswith(self.projectName):
+            if (containerID.id).startswith(self.gitRepoURL):
                 DockerClient.volumes.get(containerID.id).remove()
     except:
         pass

@@ -20,7 +20,7 @@ def databaseVolume(self, databaseType: str) -> None:
     """
 
     databaseContainerVolumes = DockerClient.volumes.create(
-        f"Build_Management_{self.projectName}_{databaseType}_volume",
+        f"Build_Management_{self.gitRepoURL}_{databaseType}_volume",
         driver="local",
     ).id
 
@@ -72,9 +72,9 @@ def databaseBuild(self) -> list:
 
         try:
             databaseContainerID = DockerClient.containers.create(
-                databases + ":latest",  # 데이터베이스 컨테이너 이미지 파라미터
-                hostname=f"""{databases}_{self.projectName}""",  # 데이터베이스 컨테이너 호스트 이름 파라미터
-                name=f"Build_Management_{self.containerOS}_{databases}_{self.projectName}",  # 도커 컨테이너 이름 파라미터
+                f"{databases}:latest",  # 데이터베이스 컨테이너 이미지 파라미터
+                hostname=f"""{databases}_{self.gitRepo[1]}""",  # 데이터베이스 컨테이너 호스트 이름 파라미터
+                name=f"Build_Management_{self.containerImage}_{databases}_{self.gitRepo[1]}",  # 도커 컨테이너 이름 파라미터
                 environment=self.databaseSetting[0],  # 데이터베이스 컨테이너 비밀번호 처리 파라미터
                 network=self.projectNetworks,  # 도커 프로젝트 네트워크 할당 파라미터
                 volumes=self.databaseSetting[1],  # 도커 프로젝트 볼륨 할당 파라미터
@@ -92,7 +92,7 @@ def databaseBuild(self) -> list:
             databaseContainerIP = DockerClient.containers.get(
                 databaseContainerID
             ).attrs["NetworkSettings"]["Networks"][
-                f"Build_Management_{self.projectName}_{self.port}_network"
+                f"Build_Management_{self.gitRepoURL}_{self.port}_network"
             ][
                 "IPAddress"
             ]

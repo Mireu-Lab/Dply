@@ -29,7 +29,7 @@ def devContainer(self, types: str, status: bool) -> None:
             ?, ?, ?, ?, ?, ?, ?, ?
         );""",
         (
-            str(self.projectName),
+            str(self.gitRepo[2]),
             str(self.devContainerID),
             str(types),
             bool(status),

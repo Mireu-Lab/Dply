@@ -39,7 +39,7 @@ def singleInformation(self) -> dict:
                 `createdTimes`,
                 `updateTimes`,
                 `devContainerID`
-            from `devContainer` where `projectName` = '{str(self.projectName)}';"""
+            from `devContainer` where `projectName` = '{str(self.gitRepo[2])}';"""
     ).fetchall()  # 개발 환경 컨테이너 정보 SQL Read
 
     gpuStatus = True if type(projectInfo[0][4]) == int else False
