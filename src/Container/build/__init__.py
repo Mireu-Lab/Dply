@@ -61,6 +61,11 @@ class Build:
             f"{self.gitRepo[2]}_network", driver="bridge"
         ).id
 
+        """프로젝트 Docker 컨테이너 볼륨 설정 ID"""
+        self.devContainerVolumes = DockerClient.volumes.create(
+            f"{self.gitRepo[2]}_volume", driver="local"
+        ).id
+
         """GPU 프로세서 할당 처리"""
         if self.processorType == "GPU" or self.processorType == "gpu":
             if settingENVRead["GPU"]["Status"] == True:

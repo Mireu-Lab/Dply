@@ -15,7 +15,7 @@ def repoImageBuild(self) -> bool:
         DockerClient.images.build(
             path=f"./Projects/{self.gitRepo[2]}",
             dockerfile=f"./Projects/{self.gitRepo[2]}" + "/Dockerfile",
-            tag=f"{self.gitRepoURL}:latest",
+            tag=f"{self.gitRepo[2]}:latest",
         )
 
         status = 200
@@ -24,4 +24,4 @@ def repoImageBuild(self) -> bool:
         ERROR.Logging()
         status = 500  # 컨테이너 생성 실패시 변경
     
-    return {"status": status, "imageTag": f"{self.gitRepoURL}:latest",}
+    return {"status": status, "imageTag": f"{self.gitRepo[2]}:latest",}

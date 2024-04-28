@@ -20,24 +20,21 @@ def devContainerBuild(self) -> dict:
 
     status = 500
 
-    # 컨테이너 이미지 할당 값
-    Tag = f"{self.gitRepoURL}:latest"
-
     # GPU 프로세서 할당 시 이미지 변경
     if self.gpuSetting != None:
         Tag = "gpu" + Tag
 
     try:
         self.devContainerID = DockerClient.containers.create(
-            f"""{self.gitRepoURL}:latest""",  # 컨테이너 이미지 파라미터
-            hostname=self.gitRepoURL,  # 컨테이너 할당 이름 파라미터
-            name=self.gitRepoURL,  # 도커 컨테이너 이름 파라미터
+            f"""{self.gitRepo[2]}:latest""",  # 컨테이너 이미지 파라미터
+            hostname=self.gitRepo[2],  # 컨테이너 할당 이름 파라미터
+            name=self.gitRepo[2],  # 도커 컨테이너 이름 파라미터
             ports={"22/tcp": self.port},  # 컨테이너 Port 할당 파라미터
             environment={"PASSWORD": self.password},  # 컨테이너 기본 Password 파라미터
             device_requests=self.gpuSetting,  # GPU할당 파라미터
             network=self.projectNetworks,  # 프로젝트 컨테이너 네트워크 할당 파라미터
             volumes={
-                f"./Projects/{self.gitRepoURL}": {"bind": "/workspace", "mode": "rw"}
+                f"./Projects/{self.gitRepo[2]}": {"bind": "/workspace", "mode": "rw"}
                 "~/.ssh": {"bind": "/home/Hosting/.ssh", "mode": "ro"}
                 "~/.gitconfig": {"bind": "/home/Hosting/.gitconfig", "mode": "rw"}
             },  # 프로젝트 컨테이너 볼륨 할당 파라미터
