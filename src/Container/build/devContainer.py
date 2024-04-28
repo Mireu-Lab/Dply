@@ -34,9 +34,9 @@ def devContainerBuild(self) -> dict:
             device_requests=self.gpuSetting,  # GPU할당 파라미터
             network=self.projectNetworks,  # 프로젝트 컨테이너 네트워크 할당 파라미터
             volumes={
-                f"./Projects/{self.gitRepo[2]}": {"bind": "/workspace", "mode": "rw"}
-                "~/.ssh": {"bind": "/home/Hosting/.ssh", "mode": "ro"}
-                "~/.gitconfig": {"bind": "/home/Hosting/.gitconfig", "mode": "rw"}
+                f"./Projects/{self.gitRepo[2]}/": {"bind": "/workspace", "mode": "rw"},
+                "~/.ssh": {"bind": "/home/Hosting/.ssh", "mode": "ro"},
+                "~/.gitconfig": {"bind": "/home/Hosting/.gitconfig", "mode": "rw"},
             },  # 프로젝트 컨테이너 볼륨 할당 파라미터
             restart_policy={"Name": "always"}
         ).short_id  # 컨테이너 ID 클래스 변수에 지정
