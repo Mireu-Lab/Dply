@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  dply-program:
+    image: registry.gitlab.com/individual-projects2/container-build-management-mastering-program:dev
+    container_name: dply-program
+    restart: always
+    ports:
+      - "8080:80"
+    user: $DOCKER_USER:$DOCKER_GROUP
+    deploy:
+     resources:
+       reservations:
+         devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/var/dply/sql:/API/SQL:rw"
+      - "/var/dply/log:/API/Log:rw"
+      - "/var/dply/projects:/Projects:rw"
